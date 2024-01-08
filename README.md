@@ -4,7 +4,6 @@
 
 <p align="center">
     <img alt="Languages" src="https://img.shields.io/github/languages/count/teodoromatheus/aporte_mensal">
-
     <img alt="Commits" src="https://img.shields.io/github/last-commit/teodoromatheus/aporte_mensal">
 </p>
 
