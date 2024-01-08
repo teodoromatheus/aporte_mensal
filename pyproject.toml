@@ -1,0 +1,14 @@
+[tool.poetry]
+name = "aporte-mensal"
+version = "0.1.0"
+description = "Projeto para apoiar nos aportes mensais na bolsa de valores"
+authors = ["teodoromatheus <matheusteodoro.r@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
