@@ -3,17 +3,27 @@ import yfinance as yf
 from typing import List
 from datetime import datetime
 from contracts.schema_cotation import CotationSchema
+import sys
 
 class CotationCollector:
     def __init__(self):
         return None
 
     def start(self, acoes: List):
-        df = self.extractCotation(acoes=acoes)
-        errors = self.validateDataFrame(dataframe=df)
-        return errors
+        df = self.extractCotation(acoes=acoes) 
+        error_schema = self.validateDataFrame(dataframe=df)
+        if error_schema:
+            for error in error_schema:
+                print(error)
+            sys.exit()
+        error_actual_date = self.validateActualDate(dataframe=df, acoes=acoes)
+        if error_actual_date:
+            for error in error_actual_date:
+                print(error)
+            sys.exit()
+        return print('Extração e Validação concluída!')
 
-    def extractCotation(self, acoes: List):
+    def extractCotation(self, acoes: List) -> pd.DataFrame:
         data_frame_completed = pd.DataFrame()
         for acao in acoes:
             result = yf.download(tickers=f'{acao}.SA', period='1y')
@@ -33,6 +43,12 @@ class CotationCollector:
                 errors.append(f'Erro na linha {index+2}: {e}')
         return errors
     
-    def actualDate(self):
+    def validateActualDate(self, acoes: List, dataframe: pd.DataFrame) -> bool:
         data_atual = datetime.today().strftime('%Y-%m-%d')
-        return None
+        errors = []
+        for acao in acoes:
+            retorno = dataframe.loc[(dataframe['Asset'] == acao) & (dataframe['Date'] == data_atual)]
+            if retorno.empty:
+                erro = f'Ativo {acao} não tem cotação na data atual'
+                errors.append(erro)
+        return errors
