@@ -43,7 +43,7 @@ class CotationCollector:
                 errors.append(f'Erro na linha {index+2}: {e}')
         return errors
     
-    def validateActualDate(self, acoes: List, dataframe: pd.DataFrame) -> bool:
+    def validateActualDate(self, acoes: List, dataframe: pd.DataFrame) -> List:
         data_atual = datetime.today().strftime('%Y-%m-%d')
         errors = []
         for acao in acoes:
