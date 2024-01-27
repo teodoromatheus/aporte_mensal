@@ -21,6 +21,12 @@ class ExcelValidator():
             for error in errors_schema:
                 print(error)
             sys.exit()
+        
+        duplicadas = self.validateUniqueAssets(df)
+
+        if duplicadas.any():
+            print('Há registros duplicados no Excel')
+            sys.exit()
 
         return print(f'Validação schema OK!')
         
@@ -44,7 +50,8 @@ class ExcelValidator():
         return errors
 
     def validateUniqueAssets(self, dataframe: pd.DataFrame):
-        pass
+        duplicadas = dataframe['ASSET'].duplicated()
+        return duplicadas
 
     def assetsExists(self, dataframe: pd.DataFrame):
         # TODO: Criar validação de ativo com yfinance
