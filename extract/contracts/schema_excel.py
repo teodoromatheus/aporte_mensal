@@ -1,5 +1,10 @@
 from pydantic import BaseModel
+from enum import Enum
+
+class StatusEnum(str, Enum):
+    carteira = "CARTEIRA"
+    monitoramento = "MONITORAMENTO"
 
 class ExcelSchema(BaseModel):
-    Asset : str
-    Status : enumerate("CARTEIRA","MONITORAMENTO")
+    ASSET : str
+    STATUS : StatusEnum
